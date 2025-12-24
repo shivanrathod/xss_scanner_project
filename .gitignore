@@ -1,0 +1,13 @@
+# Virtual Environment 
+venv/
+env/
+
+# Python Cache 
+__pycache__/
+*.pyc
+
+# Local Report 
+report.html
+
+# Mac/Windows junk files
+.DS_Store
