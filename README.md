@@ -52,10 +52,12 @@ python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_n
 python main.py -u [http://127.0.0.1:5000/profile](http://127.0.0.1:5000/profile) -p name --cookie "session_id=12345; user=admin"
 
 **Command Line Arguments**
+```
 - -u, --url: (Required) The target URL.
 - -p, --param: (Required) The GET parameter to inject payload into.
 - -c, --cookie: Session cookies for authenticated scanning.
 - -m, --method: HTTP Method: GET (default) or POST.
+```
 
 ## Logic & Design Choices:
 
