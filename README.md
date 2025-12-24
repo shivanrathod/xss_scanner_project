@@ -42,10 +42,10 @@ Prerequisites: Python 3.x
 ## Usage:   
 Run the scanner by providing the Target URL and the Parameter to test. 
 
-**Basic Scan**
+**Basic Scan:**
 python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_node) -p q
 
-**Authenticated Scan (with Cookies)**
+**Authenticated Scan (with Cookies):**
 python main.py -u [http://127.0.0.1:5000/profile](http://127.0.0.1:5000/profile) -p name --cookie "session_id=12345; user=admin"
 
 **Command Line Arguments**
