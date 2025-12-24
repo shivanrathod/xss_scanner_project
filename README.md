@@ -46,8 +46,9 @@ Prerequisites: Python 3.x
 Run the scanner by providing the Target URL and the Parameter to test. 
 
 **1. Basic Scan:**
+```
 python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_node) -p q
-
+```
 **2. POST Request Scan:**
 ```
 python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_node) -p q -m POST
