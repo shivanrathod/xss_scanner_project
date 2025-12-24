@@ -64,9 +64,9 @@ I implemented a PayloadGenerator class to handle the requirement of "adapting pa
 
 -Logic: It accepts a context argument.
 
-    -If context is attribute_name: It injects style=animation-name:rotation onanimationstart=alert(1) because standard <script> tags won't work inside a tag definition.
+   - If context is attribute_name: It injects style=animation-name:rotation onanimationstart=alert(1) because standard <script> tags won't work inside a tag definition.
     
-    -If context is attribute_value: It prioritizes closing the quote (") first.
+   - If context is attribute_value: It prioritizes closing the quote (") first.
 
 -Design Choice: Separating this into a class allows easy addition of new contexts (e.g., JSON or JavaScript contexts) in the future without breaking the scanner logic.
 
