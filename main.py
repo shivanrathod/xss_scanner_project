@@ -3,11 +3,14 @@ from colorama import init, Fore
 from core.scanner import XSSScanner
 from core.reporter import HTMLReporter
 
-# Initialize colorama for Windows terminal support
+# Initialize colorama for cross-platform colored output
 init()
 
 def parse_cookies(cookie_string):
-    """Parses a cookie string (key=value; key2=val2) into a dictionary."""
+    """
+    Parses a raw cookie string (e.g., "id=123; session=abc") into a dictionary.
+    Required for the requests library to handle authenticated sessions.
+    """
     cookies = {}
     if cookie_string:
         for item in cookie_string.split(';'):
@@ -17,27 +20,40 @@ def parse_cookies(cookie_string):
     return cookies
 
 def main():
-    # Setup CLI arguments
-    parser = argparse.ArgumentParser(description="Custom Context-Aware Reflected XSS Scanner")
+    """
+    Main entry point for the XSS Scanner CLI tool.
+    Handles argument parsing, scanner initialization, and reporting.
+    """
+    # 1. Setup Command Line Arguments
+    parser = argparse.ArgumentParser(description="Custom Reflected XSS Scanner Tool")
     
-    parser.add_argument("-u", "--url", help="Target URL", required=True)
-    parser.add_argument("-p", "--param", help="Vulnerable parameter name", required=True)
-    parser.add_argument("-c", "--cookie", help="Session cookies (e.g., 'session=123')", required=False)
+    parser.add_argument("-u", "--url", help="Target URL (e.g., http://example.com/search)", required=True)
+    parser.add_argument("-p", "--param", help="Parameter to test (e.g., q, search, query)", required=True)
+    parser.add_argument("-c", "--cookie", help="Custom cookies for authenticated scans (e.g., 'session_id=xyz')", required=False)
+    # Requirement: Support for both GET and POST methods
+    parser.add_argument("-m", "--method", help="HTTP Method to use: GET or POST", default="GET", choices=["GET", "POST"])
     
     args = parser.parse_args()
 
-    # Parse optional cookies
+    # 2. Process Inputs
     cookies = parse_cookies(args.cookie)
 
     print(f"{Fore.YELLOW}=== Starting XSS Scanner ==={Fore.RESET}")
+    print(f"[*] Target: {args.url}")
+    print(f"[*] Method: {args.method}")
+    
     if cookies:
-        print(f"{Fore.CYAN}[*] Authenticated Scan Enabled.{Fore.RESET}")
+        print(f"[*] Loaded Cookies: {cookies}")
 
-    # Initialize and run scanner
+    # 3. Initialize Scanner Engine
+    # Injecting cookies to handle authentication requirements
     scanner = XSSScanner(cookies=cookies)
-    vulnerabilities = scanner.scan(args.url, args.param)
+    
+    # 4. Start the Scan
+    # The scanner will iterate through multiple contexts (Text, Attribute, etc.)
+    vulnerabilities = scanner.scan(args.url, args.param, method=args.method)
 
-    # Generate Report
+    # 5. Generate Report
     reporter = HTMLReporter()
     reporter.generate_report(vulnerabilities)
 
