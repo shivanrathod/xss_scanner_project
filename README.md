@@ -52,10 +52,10 @@ python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_n
 python main.py -u [http://127.0.0.1:5000/profile](http://127.0.0.1:5000/profile) -p name --cookie "session_id=12345; user=admin"
 
 **Command Line Arguments**
--u, --url: (Required) The target URL.
--p, --param: (Required) The GET parameter to inject payload into.
--c, --cookie: Session cookies for authenticated scanning.
--m, --method: HTTP Method: GET (default) or POST.
+- `-u, --url: (Required) The target URL.
+- `-p, --param: (Required) The GET parameter to inject payload into.
+- `-c, --cookie: Session cookies for authenticated scanning.
+- `-m, --method: HTTP Method: GET (default) or POST.
 
 ## Logic & Design Choices:
 
@@ -64,7 +64,7 @@ I implemented a PayloadGenerator class to handle the requirement of "adapting pa
 
 -Logic: It accepts a context argument.
 
-    -If context is attribute_name: It injects style=animation-name:rotation onanimationstart=alert(1) because standard           <script> tags won't work inside a tag definition.
+    -If context is attribute_name: It injects style=animation-name:rotation onanimationstart=alert(1) because standard <script> tags won't work inside a tag definition.
     
     -If context is attribute_value: It prioritizes closing the quote (") first.
 
