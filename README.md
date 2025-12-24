@@ -33,11 +33,14 @@ xss_scanner_project/
 Prerequisites: Python 3.x
 
 1. **Install Dependencies:**
+```
     pip install -r requirements.txt
-
-2. **Start the Vulnerable Lab Server (Optional for testing): Open a terminal and run:**  
+```
+3. **Start the Vulnerable Lab Server (Optional for testing): Open a terminal and run:**  
+```
     python vulnerable_server.py
-    -The server will run on http://127.0.0.1:5000.
+```
+-The server will run on http://127.0.0.1:5000.
 
 ## Usage:   
 Run the scanner by providing the Target URL and the Parameter to test. 
@@ -46,10 +49,13 @@ Run the scanner by providing the Target URL and the Parameter to test.
 python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_node) -p q
 
 **2. POST Request Scan:**
+```
 python main.py -u [http://127.0.0.1:5000/text_node](http://127.0.0.1:5000/text_node) -p q -m POST
-
+```
 **3. Authenticated Scan (with Cookies):**
+```
 python main.py -u [http://127.0.0.1:5000/profile](http://127.0.0.1:5000/profile) -p name --cookie "session_id=12345; user=admin"
+```
 
 **Command Line Arguments**
 ```
