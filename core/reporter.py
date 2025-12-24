@@ -6,7 +6,7 @@ class HTMLReporter:
 
     def generate_report(self, vulnerabilities):
         """
-        Ye function vulnerabilities ki list leta hai aur ek HTML file banata hai.
+        Takes a list of vulnerabilities and generates a styled HTML report file.
         """
         html_content = """
         <html>
@@ -33,17 +33,20 @@ class HTMLReporter:
                 </tr>
         """
 
-        # Agar koi kami nahi mili
+        # Case: No vulnerabilities found
         if not vulnerabilities:
             html_content += "<tr><td colspan='4'>No Vulnerabilities Found (Safe)</td></tr>"
         
-        # Agar kami mil gayi, toh table mein row add karo
+        # Case: Vulnerabilities found - Add rows to the table
         for vuln in vulnerabilities:
+            # Escaping HTML characters in payload to display them safely
+            safe_payload = vuln['payload'].replace('<', '&lt;').replace('>', '&gt;')
+            
             html_content += f"""
             <tr>
                 <td>{vuln['url']}</td>
                 <td>{vuln['context']}</td>
-                <td><code>{vuln['payload'].replace('<', '&lt;').replace('>', '&gt;')}</code></td>
+                <td><code>{safe_payload}</code></td>
                 <td class="vuln">VULNERABLE</td>
             </tr>
             """
@@ -54,7 +57,7 @@ class HTMLReporter:
         </html>
         """
 
-        # File save karo
+        # Write the HTML content to file
         with open(self.filename, "w") as f:
             f.write(html_content)
         
