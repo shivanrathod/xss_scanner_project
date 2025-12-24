@@ -59,34 +59,34 @@ python main.py -u [http://127.0.0.1:5000/profile](http://127.0.0.1:5000/profile)
 
 ## Logic & Design Choices:
 
-1. **Payload Generator (core/generator.py):**
+**1. Payload Generator (core/generator.py):**
 I implemented a PayloadGenerator class to handle the requirement of "adapting payloads based on position".
 
--Logic: It accepts a context argument.
+- Logic: It accepts a context argument.
 
    - If context is attribute_name: It injects style=animation-name:rotation onanimationstart=alert(1) because standard <script> tags won't work inside a tag definition.
     
    - If context is attribute_value: It prioritizes closing the quote (") first.
 
--Design Choice: Separating this into a class allows easy addition of new contexts (e.g., JSON or JavaScript contexts) in the future without breaking the scanner logic.
+- Design Choice: Separating this into a class allows easy addition of new contexts (e.g., JSON or JavaScript contexts) in the future without breaking the scanner logic.
 
-2. **Detection Approach:**
+**2. Detection Approach:**
 Instead of using a heavy headless browser to check for JavaScript execution, I used a Canary (Sentinel Value) approach.
 
-    -The generator embeds a unique string (XSS_TEST_123) in every payload.
+   - The generator embeds a unique string (XSS_TEST_123) in every payload.
 
-    -The scanner checks if canary in response.text.
+   - The scanner checks if canary in response.text.
 
-    -Assumption: If the server reflects the payload characters (like < > " ') and the unique token without encoding/sanitization, the endpoint is vulnerable.
+   - Assumption: If the server reflects the payload characters (like < > " ') and the unique token without encoding/sanitization, the endpoint is vulnerable.
 
-3. **Why Modular?**    
+**3. Why Modular?**    
 I avoided writing a single-file script. By using a package structure (core/), the code is cleaner, easier to debug, and represents a production-ready software engineering approach.
 
 ## Time Spent:
 Total Time: ~5 Hours
 
-    -Research (1 Hour): Specifically researching Attribute Name injection vectors and bypass techniques.
+   - Research (1 Hour): Specifically researching Attribute Name injection vectors and bypass techniques.
 
-    -Core Development (2.5 Hours): Implementing the Generator, Scanner, and Reporter classes.
+   - Core Development (2.5 Hours): Implementing the Generator, Scanner, and Reporter classes.
 
-    -Lab & Testing (1.5 Hours): Building the vulnerable_server.py, debugging edge cases, and finalizing the CLI arguments.
+   - Lab & Testing (1.5 Hours): Building the vulnerable_server.py, debugging edge cases, and finalizing the CLI arguments.
